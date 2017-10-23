@@ -1,0 +1,21 @@
+text {
+	font-size: 12px;
+}
+.parentRect rect {
+	fill: rgba(255,255,255,0);
+}
+.parentRect text {
+	font-size: 13px;
+	font-weight: bold;
+	display: none;
+	color: #000;
+}
+.parentRect:hover rect {
+	fill: rgba(255,255,255,.6);
+}
+.parentRect:hover text {
+	display: block;
+}
+.textBg {
+	fill: rgba(255,255,255,0.5);
+}
