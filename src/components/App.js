@@ -11,6 +11,7 @@ class App extends Component {
 				<header className="App-header">
 					<Logo />
 					<h1 className="App-title">HTML Treemapper</h1>
+					<p className="by-line">by <a href="http://meredithdodge.com">Meredith Dodge</a></p>
 				</header>
 				<section className="App-body">
 					<FormContainer />

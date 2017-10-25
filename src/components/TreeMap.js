@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
+import Button from 'react-bootstrap/lib/Button';
 import {scaleLinear,scaleOrdinal,schemeCategory20b} from 'd3-scale';
 import {hierarchy,treemap,treemapResquarify} from 'd3-hierarchy';
 import TypeToggle from './TypeToggle';
@@ -35,6 +36,7 @@ class TreeView extends Component {
 			sum_method: 'byCount'
 		};
 		this.toggleSumMethod = this.toggleSumMethod.bind(this);
+		this.exportSVG = this.exportSVG.bind(this);
 	}
 	addNode(node,obj,idx) {
 		obj.name = node.nodeName.toLowerCase();
@@ -69,7 +71,7 @@ class TreeView extends Component {
 		return scaleLinear().range([0, dim]).domain([0,dim]);
 	}
 	getTextColor(c) {
-		return this.getLuma(c) < 130 ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)';
+		return this.getLuma(c) < 130 ? '#FFF' : '#000';
 	}
 	getLuma(c) {
 		c = c.substring(1);      // strip #
@@ -89,7 +91,8 @@ class TreeView extends Component {
 					transform={'translate(' + this.state.x(d.x0) + ',' + this.state.y(d.y0) + ')' }>
 					<rect id={'rect-fill-'+i}
 						className="leafFill"
-						style={{fill:fillColor,stroke:'#fff'}}
+						fill={fillColor}
+						stroke="#fff"
 						width={this.state.kx*(d.x1 - d.x0)}
 						height={this.state.ky*(d.y1 - d.y0)} />
 					<clipPath id={'clip-'+i}>
@@ -97,7 +100,8 @@ class TreeView extends Component {
 					</clipPath>
 					<text clipPath={'url(#clip-'+i+')'}
 						x="4" y="13"
-						style={{fill:this.getTextColor(fillColor)}}>{d.data.name}</text>
+						fill={this.getTextColor(fillColor)}
+						fillOpacity="0.7">{d.data.name}</text>
 				</g>
 			);
 		});
@@ -114,12 +118,14 @@ class TreeView extends Component {
 					transform={'translate(' + this.state.x(d.x0) + ',' + this.state.y(d.y0) + ')' }
 					onClick={e => this.zoom(this.state.node===d ? this.state.root : d,e)}>
 					<rect id={'rect-parent-'+i}
-						width={width} height={height} />
+						width={width} height={height}
+					 	fill="#fff" fillOpacity="0" />
 					<clipPath id={'clip-parent-'+i}>
 						<use href={'#rect-parent-'+i}></use>
 					</clipPath>
 					<text clipPath={'url(#clip-parent-'+i+')'}
 						x={textX} y={height/2}
+						fillOpacity="0"
 						textAnchor={textAnchor}>{d.data.name}</text>
 				</g>
 			);
@@ -127,13 +133,17 @@ class TreeView extends Component {
 		return (
 			<div>
 				<FormGroup>
-				<TypeToggle name="sum_method"
-					value={this.state.sum_method}
-					options={[
-						{value:'byCount',label:'By Count'},
-						{value:'bySize',label:'By Size'}
-					]}
-					onChange={this.toggleSumMethod} />
+					<TypeToggle name="sum_method"
+						value={this.state.sum_method}
+						options={[
+							{value:'byCount',label:'By Count'},
+							{value:'bySize',label:'By Size'}
+						]}
+						onChange={this.toggleSumMethod} />
+					<Button className="pull-right"
+						bsSize="xs" bsStyle="primary"
+						onClick={this.exportSVG}>Export SVG</Button>
+					<a id="link">Link</a>
 				</FormGroup>
 				<svg width={this.state.w} height={this.state.h} ref={svg => this.svg = svg}>
 					{leafRects}
@@ -164,6 +174,17 @@ class TreeView extends Component {
 		})
 		this.state._treemap(this.state.root.sum(this[value]));
 		this.zoom(this.state.node);
+	}
+	exportSVG() {
+		const svgData = this.svg.outerHTML;
+		const svgBlob = new Blob([svgData], {type:'image/svg+xml;charset=utf-8'});
+		const svgUrl = URL.createObjectURL(svgBlob);
+		const downloadLink = document.createElement('a');
+		downloadLink.href = svgUrl;
+		downloadLink.download = 'treemap.svg';
+		document.body.appendChild(downloadLink);
+		downloadLink.click();
+		document.body.removeChild(downloadLink);
 	}
 };
 

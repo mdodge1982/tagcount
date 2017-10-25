@@ -35,7 +35,6 @@ class InputForm extends Component {
 	}
 	handleSubmit(e) {
 		e.preventDefault();
-		console.log(this.input.value);
 		this.props.submitValue(this.input.value);
 	}
 	clearInput(e) {
