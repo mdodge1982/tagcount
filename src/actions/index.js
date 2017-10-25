@@ -1,15 +1,9 @@
-const toggleType = () => {
-	return {type: 'TYPE_TOGGLE'};
+const clearInput = () => {
+	return {type: 'INPUT_CLEAR'};
 };
 
 const submitValue = value => {
-	return (dispatch,getState) => {
-		const {type} = getState();
-		dispatch({
-			type: type+'_UPDATE',
-			value
-		});
-	};
+	return {type: 'HTML_UPDATE',value};
 };
 
-export {toggleType,submitValue};
+export {clearInput,submitValue};

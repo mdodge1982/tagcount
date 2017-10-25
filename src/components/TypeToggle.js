@@ -1,25 +1,17 @@
 import React, {Component} from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
+import ToggleButtonGroup from 'react-bootstrap/lib/ToggleButtonGroup';
+import ToggleButton from 'react-bootstrap/lib/ToggleButton';
 import './TypeToggle.css';
-
-const ConditionalButton = (props) => {
-	const {active,label,onClick} = props;
-	if(active){
-		return <strong>{label}</strong>
-	}else{
-		return <RaisedButton label={label} primary={true} onClick={onClick} />
-	}
-};
 
 class TypeToggle extends Component {
 	render() {
+		const {name,value,onChange,options} = this.props;
 		return (
-			<div className="TypeToggle">
-				{this.props.types.map(str => (
-					<ConditionalButton key={str} label={str}
-						active={str===this.props.type} onClick={this.props.toggleType} />
+			<ToggleButtonGroup bsSize="xs" type="radio" name={name} value={value} onChange={onChange}>
+				{options.map(option => (
+					<ToggleButton key={option.value} value={option.value}>{option.label}</ToggleButton>
 				))}
-			</div>
+			</ToggleButtonGroup>
 		);
 	}
 };

@@ -16,18 +16,8 @@ const parseTags = (node,tags) => {
 	return tags;
 }
 
-const initialState = {
-	type: 'HTML'
-};
-
-const tagCounter = (state = initialState, action) => {
+const tagCounter = (state = {}, action) => {
 	switch(action.type){
-		case 'TYPE_TOGGLE':
-			const type = state.type==='HTML' ? 'URL' : 'HTML';
-			return {
-				...state,
-				type
-			};
 		case 'HTML_UPDATE':
 			const parser = new DOMParser();
 			const doc = parser.parseFromString(action.value,'text/html');
@@ -37,6 +27,12 @@ const tagCounter = (state = initialState, action) => {
 				tags: parseTags(docElem,{}),
 				docElem
 			}
+		case 'INPUT_CLEAR':
+			const newState = {...state};
+			delete newState.docElem;
+			delete newState.tags;
+			delete newState.url;
+			return newState;
 		case 'URL_UPDATE':
 			return {
 				...state,

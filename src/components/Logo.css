@@ -1,0 +1,9 @@
+
+.Logo {
+	float: left;
+	margin: 0 15px 0 0;
+}
+.Logo rect {
+	stroke: #fff;
+	fill-opacity: 0;
+}

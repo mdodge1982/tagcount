@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {scaleLinear} from 'd3-scale';
 import {max} from 'd3-array';
+import './BarChart.css';
 
 class BarChart extends Component {
 	render() {
@@ -18,23 +19,32 @@ class BarChart extends Component {
 		const dataMax = max(counts);
 		const yScale = scaleLinear().domain([0, dataMax]).range([0, height-20]);
 		const bars = data.map((itm, i) => {
+			const rectHeight = yScale(itm.count);
+			const rectY = height-rectHeight;
+			let textY = rectY+15;
+			const x = i*barWdith;
+			const textStyle = {};
+			if(rectHeight<20){
+				textY = rectY-5;
+			}else{
+				textStyle.fill = '#fff';
+			}
 			return (
 				<g key={'g-'+itm.name}>
-					<rect style={{fill:'#d7f3f7',stroke:'#79d7e4'}}
-					x={(i*barWdith+.05)+'%'}
-					y={height-yScale(itm.count)}
-					height={yScale(itm.count)}
-					width={(barWdith-.5)+'%'} />
-					<text x={(i*barWdith+(barWdith-.2)/2)+'%'}
-					style={{fontSize:'12px'}}
-					textAnchor="middle"
-					width={(barWdith-.2)+'%'}
-					y={height-yScale(itm.count)-10}>{itm.name+' ('+itm.count+')'}</text>
+					<rect x={(x+.05)+'%'}
+						y={rectY}
+						height={rectHeight}
+						width={(barWdith-.5)+'%'} />
+					<text x={(x+(barWdith-.2)/2)+'%'}
+						y={textY}
+						style={textStyle}
+						width={(barWdith-.2)+'%'}
+						textAnchor="middle">{itm.name+' ('+itm.count+')'}</text>
 				</g>
 			);
 		});
 		return (
-			<svg width="100%" height={height}>
+			<svg width="100%" height={height} className="BarChart">
 				{bars}
 			</svg>
 		);

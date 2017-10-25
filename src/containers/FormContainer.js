@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {toggleType,submitValue} from '../actions/';
+import {submitValue,clearInput} from '../actions/';
 import InputForm from '../components/InputForm';
 
 const mapStateToProps = (state) => {
@@ -8,5 +8,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
 	mapStateToProps,
-	{toggleType,submitValue}
+	{submitValue,clearInput}
 )(InputForm);

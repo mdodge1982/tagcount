@@ -1,49 +1,46 @@
 import React, {Component} from 'react';
-import TypeToggle from './TypeToggle';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
+import FormControl from 'react-bootstrap/lib/FormControl';
+import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
+import Button from 'react-bootstrap/lib/Button';
+import './InputForm.css';
 
 class InputForm extends Component {
 	constructor(props) {
 		super(props);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-		this.state = {
-			value: ''
-		}
+		this.clearInput = this.clearInput.bind(this);
 	}
 	render() {
 		let textFieldProps = {
-			floatingLabelText: 'Paste a page URL',
-			floatingLabelStyle: {
-				left: '0'
-			},
-			fullWidth: true
+			inputRef: ref => this.input = ref,
+			placeholder: 'Paste HTML content',
+			componentClass: 'textarea',
+			rows: this.props.docElem
+				? 2
+				: 10
 		};
-		if(this.props.type==='HTML'){
-			textFieldProps = {
-				...textFieldProps,
-				floatingLabelText: 'Paste HTML content',
-				multiLine: true,
-				rows: 5
-			};
-		}
 		return (
 			<form onSubmit={this.handleSubmit}>
-				<TypeToggle type={this.props.type} types={['HTML','URL']} toggleType={this.props.toggleType} />
-				<TextField {...textFieldProps} ref={(input) => this.input = input}
-					value={this.state.value} onChange={this.handleChange} />
-				<RaisedButton label="Submit" type="submit" primary={true} />
+				<FormGroup controlId="formBasicText">
+					<FormControl {...textFieldProps} />
+					<FormControl.Feedback/>
+				</FormGroup>
+				<ButtonToolbar>
+					<Button type="submit" bsStyle="primary">Submit</Button>
+					<Button onClick={this.clearInput}>Clear</Button>
+				</ButtonToolbar>
 			</form>
 		);
 	}
-	handleChange(e,text) {
-		this.setState({value:text});
-	}
 	handleSubmit(e) {
 		e.preventDefault();
-		this.props.submitValue(this.input.getValue());
-		this.setState({value:''});
+		console.log(this.input.value);
+		this.props.submitValue(this.input.value);
+	}
+	clearInput(e) {
+		this.input.value = '';
+		this.props.clearInput();
 	}
 };
 

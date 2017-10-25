@@ -1,0 +1,15 @@
+.Charts {
+	display: flex;
+	padding: 20px 0;
+}
+.Charts>div:first-child {
+	padding: 0 20px 0 0;
+	border-right: 2px solid black;
+}
+.Charts>div:last-child {
+	padding: 0 0 0 20px;
+	flex-grow: 1;
+}
+.Charts .fa {
+	font-size: 30px;
+}
