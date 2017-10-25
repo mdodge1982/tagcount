@@ -143,7 +143,6 @@ class TreeView extends Component {
 					<Button className="pull-right"
 						bsSize="xs" bsStyle="primary"
 						onClick={this.exportSVG}>Export SVG</Button>
-					<a id="link">Link</a>
 				</FormGroup>
 				<svg width={this.state.w} height={this.state.h} ref={svg => this.svg = svg}>
 					{leafRects}
