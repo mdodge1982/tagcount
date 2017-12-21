@@ -8,6 +8,7 @@
     "d3-selection": "^1.1.0",
     "d3-transition": "^1.1.0",
     "isomorphic-fetch": "^2.2.1",
+    "object.values": "^1.0.4",
     "react": "^16.0.0",
     "react-bootstrap": "^0.31.4",
     "react-dom": "^16.0.0",

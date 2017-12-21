@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
 import {scaleLinear} from 'd3-scale';
 import {max} from 'd3-array';
+import values from 'object.values';
 import './BarChart.css';
 
 class BarChart extends Component {
 	render() {
 		const height = 500;
+		if (!Object.values) {
+			values.shim();
+		}
 		let data = Object.values(this.props.tags);
 		data = data.sort((a,b) => {
 			const n = b.count - a.count;
