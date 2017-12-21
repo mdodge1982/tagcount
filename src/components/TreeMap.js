@@ -96,7 +96,8 @@ class TreeView extends Component {
 						width={this.state.kx*(d.x1 - d.x0)}
 						height={this.state.ky*(d.y1 - d.y0)} />
 					<clipPath id={'clip-'+i}>
-						<use href={'#rect-fill-'+i}></use>
+						<rect width={this.state.kx*(d.x1 - d.x0)}
+							height={this.state.ky*(d.y1 - d.y0)} />
 					</clipPath>
 					<text clipPath={'url(#clip-'+i+')'}
 						x="4" y="13"
@@ -121,7 +122,7 @@ class TreeView extends Component {
 						width={width} height={height}
 					 	fill="#fff" fillOpacity="0" />
 					<clipPath id={'clip-parent-'+i}>
-						<use href={'#rect-parent-'+i}></use>
+						<rect width={width} height={height} />
 					</clipPath>
 					<text clipPath={'url(#clip-parent-'+i+')'}
 						x={textX} y={height/2}
@@ -144,7 +145,7 @@ class TreeView extends Component {
 						bsSize="xs" bsStyle="primary"
 						onClick={this.exportSVG}>Export SVG</Button>
 				</FormGroup>
-				<svg width={this.state.w} height={this.state.h} ref={svg => this.svg = svg}>
+				<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width={this.state.w} height={this.state.h} ref={svg => this.svg = svg}>
 					{leafRects}
 					{parentRects}
 				</svg>

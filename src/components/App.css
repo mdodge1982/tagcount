@@ -5,15 +5,19 @@
 	color: white;
 	display: flex;
 }
-.App-header h1 {
-	margin: 0;
-	line-height: 40px;
-}
 .App-body {
 	margin: 20px;
 }
 .App-title {
 	font-size: 1.5em;
+	margin: 0;
+	line-height: 2em;
+}
+@media (max-width: 760px) {
+	.App-title {
+		font-size: 1em;
+		line-height: 2.5em;
+	}
 }
 .App-intro {
 	font-size: large;
@@ -22,7 +26,12 @@
 	flex-grow: 1;
 	text-align: right;
 	font-size: .8em;
-	padding: 15px 0 0;
+	padding: 1.25em 0 0;
+}
+@media (max-width: 760px) {
+.by-line {
+	font-size: .7em;
+}
 }
 .by-line a {
 	color: inherit;

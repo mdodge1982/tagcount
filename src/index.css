@@ -2,6 +2,17 @@ body {
 	margin: 0;
 	padding: 0;
 	font-family: sans-serif;
+	font-size: 14px;
+}
+@media (max-width: 760px) {
+	body {
+		font-size: 16px;
+	}
+}
+input[type='text'],
+input[type='number'],
+textarea {
+	font-size: inherit !important;
 }
 .padding {
 	padding: 20px 0;
